@@ -1,0 +1,181 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #1a1a2e;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"borderWidth": 2, "borderWidthSelected": 4, "color": "#ff0000", "font": {"color": "white"}, "id": "Ghislaine Maxwell", "label": "Ghislaine Maxwell", "shape": "dot", "size": 43.0, "title": "\u003cb\u003eGhislaine Maxwell\u003c/b\u003e\u003cbr\u003eCategory: Core\u003cbr\u003eMentions: 66\u003cbr\u003eLocations: United States, New York, NEW YORK\nDate range: 1994-02-09 to 2025-12-24"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#ff0000", "font": {"color": "white"}, "id": "Jeffrey Epstein", "label": "Jeffrey Epstein", "shape": "dot", "size": 50, "title": "\u003cb\u003eJeffrey Epstein\u003c/b\u003e\u003cbr\u003eCategory: Core\u003cbr\u003eMentions: 177\u003cbr\u003eLocations: Palm Beach, New York, United States\nDate range: 1994-02-09 to 2025-12-24"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Encounter Detail", "label": "Encounter Detail", "shape": "dot", "size": 15, "title": "\u003cb\u003eEncounter Detail\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 6\u003cbr\u003eLocations: DPPA, QUEENS COUNTY, ROME\nDate range: 2019-06-06 to 2019-06-06"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Counties History", "label": "Counties History", "shape": "dot", "size": 15, "title": "\u003cb\u003eCounties History\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 6\u003cbr\u003eLocations: DPPA, QUEENS COUNTY, ROME\nDate range: 2019-06-06 to 2019-06-06"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Pilot Licenses", "label": "Pilot Licenses", "shape": "dot", "size": 15, "title": "\u003cb\u003ePilot Licenses\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 6\u003cbr\u003eLocations: DPPA, QUEENS COUNTY, ROME\nDate range: 2019-06-06 to 2019-06-06"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Visa Card", "label": "Visa Card", "shape": "dot", "size": 15, "title": "\u003cb\u003eVisa Card\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 6\u003cbr\u003eLocations: new york, Hotmail, United States\nDate range: 2005-03-21 to 2005-12-24"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Richard Taus", "label": "Richard Taus", "shape": "dot", "size": 17.5, "title": "\u003cb\u003eRichard Taus\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 15\u003cbr\u003eLocations: New York, New York 10007, United States\nDate range: 2020-07-17 to 2020-12-24"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Appendix A", "label": "Appendix A", "shape": "dot", "size": 15, "title": "\u003cb\u003eAppendix A\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 5\u003cbr\u003eLocations: /i2,r, Signatur, \u2022\u2022Ie\nDate range: 2005-02-02 to 2025-12-14"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "David Copperfield \nEvent", "label": "David Copperfield \nEvent", "shape": "dot", "size": 15, "title": "\u003cb\u003eDavid Copperfield \nEvent\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 4\u003cbr\u003eLocations: Intermissions\nDate range: 2005-02-02 to 2005-12-24"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#ff66cc", "font": {"color": "white"}, "id": "David Copperfield", "label": "David Copperfield", "shape": "dot", "size": 15, "title": "\u003cb\u003eDavid Copperfield\u003c/b\u003e\u003cbr\u003eCategory: Entertainment\u003cbr\u003eMentions: 6\u003cbr\u003eLocations: Intermissions\nDate range: 2005-02-02 to 2005-12-24"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Floor \nBelle Glade", "label": "Floor \nBelle Glade", "shape": "dot", "size": 15, "title": "\u003cb\u003eFloor \nBelle Glade\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 6\u003cbr\u003eLocations: Delray Beach, North Australian Avenue, Palm Beach County\nDate range: 2015-12-24 to 2015-12-24"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Will Provide", "label": "Will Provide", "shape": "dot", "size": 15, "title": "\u003cb\u003eWill Provide\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 6\u003cbr\u003eLocations: Delray Beach, North Australian Avenue, Palm Beach County\nDate range: 2015-12-24 to 2015-12-24"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#ff6600", "font": {"color": "white"}, "id": "Jean-Luc Brunel", "label": "Jean-Luc Brunel", "shape": "dot", "size": 33.0, "title": "\u003cb\u003eJean-Luc Brunel\u003c/b\u003e\u003cbr\u003eCategory: Accomplice\u003cbr\u003eMentions: 46\u003cbr\u003eLocations: Paris, DSC03492, Matisse"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Jean Luc=", "label": "Jean Luc=", "shape": "dot", "size": 15, "title": "\u003cb\u003eJean Luc=\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 6\u003cbr\u003eLocations: DSC03492"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#0066ff", "font": {"color": "white"}, "id": "Donald Trump", "label": "Donald Trump", "shape": "dot", "size": 15, "title": "\u003cb\u003eDonald Trump\u003c/b\u003e\u003cbr\u003eCategory: Political\u003cbr\u003eMentions: 5\u003cbr\u003eLocations: Miami, New York, Epstein\nDate range: 2006-07-19 to 2024-01-08"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Julie K. Brown", "label": "Julie K. Brown", "shape": "dot", "size": 15, "title": "\u003cb\u003eJulie K. Brown\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 6\u003cbr\u003eLocations: Palm \nBeach County, Miami, Palm Beach County\nDate range: 2006-07-19 to 2008-06-30"}, {"borderWidth": 2, "borderWidthSelected": 4, "color": "#888888", "font": {"color": "white"}, "id": "Jeffrey Epstein\u2019S", "label": "Jeffrey Epstein\u2019S", "shape": "dot", "size": 15, "title": "\u003cb\u003eJeffrey Epstein\u2019S\u003c/b\u003e\u003cbr\u003eCategory: Other\u003cbr\u003eMentions: 3\u003cbr\u003eLocations: Palm \nBeach County, Miami, Palm Beach County\nDate range: 2006-07-19 to 2008-06-30"}]);
+                  edges = new vis.DataSet([{"color": "rgba(150,150,150,0.5)", "from": "Ghislaine Maxwell", "title": "38 co-occurrences", "to": "Jeffrey Epstein", "width": 10}, {"color": "rgba(150,150,150,0.5)", "from": "Ghislaine Maxwell", "title": "6 co-occurrences", "to": "Richard Taus", "width": 1.7999999999999998}, {"color": "rgba(150,150,150,0.5)", "from": "Jeffrey Epstein", "title": "36 co-occurrences", "to": "Jeffrey Epstein", "width": 10}, {"color": "rgba(150,150,150,0.5)", "from": "Jeffrey Epstein", "title": "3 co-occurrences", "to": "Visa Card", "width": 1}, {"color": "rgba(150,150,150,0.5)", "from": "Jeffrey Epstein", "title": "3 co-occurrences", "to": "Richard Taus", "width": 1}, {"color": "rgba(150,150,150,0.5)", "from": "Jeffrey Epstein", "title": "3 co-occurrences", "to": "Donald Trump", "width": 1}, {"color": "rgba(150,150,150,0.5)", "from": "Jeffrey Epstein", "title": "3 co-occurrences", "to": "Julie K. Brown", "width": 1}, {"color": "rgba(150,150,150,0.5)", "from": "Jeffrey Epstein", "title": "3 co-occurrences", "to": "Jeffrey Epstein\u2019S", "width": 1}, {"color": "rgba(150,150,150,0.5)", "from": "Encounter Detail", "title": "6 co-occurrences", "to": "Pilot Licenses", "width": 1.7999999999999998}, {"color": "rgba(150,150,150,0.5)", "from": "Encounter Detail", "title": "6 co-occurrences", "to": "Counties History", "width": 1.7999999999999998}, {"color": "rgba(150,150,150,0.5)", "from": "Counties History", "title": "6 co-occurrences", "to": "Pilot Licenses", "width": 1.7999999999999998}, {"color": "rgba(150,150,150,0.5)", "from": "Appendix A", "title": "4 co-occurrences", "to": "David Copperfield \nEvent", "width": 1.2}, {"color": "rgba(150,150,150,0.5)", "from": "Appendix A", "title": "4 co-occurrences", "to": "David Copperfield", "width": 1.2}, {"color": "rgba(150,150,150,0.5)", "from": "David Copperfield \nEvent", "title": "4 co-occurrences", "to": "David Copperfield", "width": 1.2}, {"color": "rgba(150,150,150,0.5)", "from": "Floor \nBelle Glade", "title": "6 co-occurrences", "to": "Will Provide", "width": 1.7999999999999998}, {"color": "rgba(150,150,150,0.5)", "from": "Jean-Luc Brunel", "title": "12 co-occurrences", "to": "Jean-Luc Brunel", "width": 3.5999999999999996}, {"color": "rgba(150,150,150,0.5)", "from": "Jean-Luc Brunel", "title": "12 co-occurrences", "to": "Jean Luc=", "width": 3.5999999999999996}, {"color": "rgba(150,150,150,0.5)", "from": "Donald Trump", "title": "6 co-occurrences", "to": "Julie K. Brown", "width": 1.7999999999999998}, {"color": "rgba(150,150,150,0.5)", "from": "Donald Trump", "title": "6 co-occurrences", "to": "Jeffrey Epstein\u2019S", "width": 1.7999999999999998}, {"color": "rgba(150,150,150,0.5)", "from": "Julie K. Brown", "title": "6 co-occurrences", "to": "Jeffrey Epstein\u2019S", "width": 1.7999999999999998}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {
+    "configure": {
+        "enabled": false
+    },
+    "edges": {
+        "color": {
+            "inherit": true
+        },
+        "smooth": {
+            "enabled": true,
+            "type": "dynamic"
+        }
+    },
+    "interaction": {
+        "dragNodes": true,
+        "hideEdgesOnDrag": false,
+        "hideNodesOnDrag": false
+    },
+    "physics": {
+        "barnesHut": {
+            "avoidOverlap": 0,
+            "centralGravity": 0.3,
+            "damping": 0.09,
+            "gravitationalConstant": -8000,
+            "springConstant": 0.001,
+            "springLength": 150
+        },
+        "enabled": true,
+        "stabilization": {
+            "enabled": true,
+            "fit": true,
+            "iterations": 1000,
+            "onlyDynamicEdges": false,
+            "updateInterval": 50
+        }
+    }
+};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+    <div style="position: fixed; top: 10px; left: 10px; background: rgba(0,0,0,0.8);
+                padding: 15px; border-radius: 10px; z-index: 1000; color: white; font-family: Arial;">
+        <h3 style="margin-top: 0;">Epstein Network</h3>
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #ff0000;">●</span> Core (Epstein/Maxwell)</p>
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #ff6600;">●</span> Accomplices</p>
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #9900ff;">●</span> Victims</p>
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #0066ff;">●</span> Political Figures</p>
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #00cc00;">●</span> Business/Finance</p>
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #ffcc00;">●</span> Legal</p>
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #00cccc;">●</span> Academic/Science</p>
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #ff66cc;">●</span> Entertainment</p>
+        <p style="font-size: 12px; margin: 5px 0;"><span style="color: #888888;">●</span> Other</p>
+        <hr>
+        <p style="font-size: 11px;">Node size = mention frequency</p>
+        <p style="font-size: 11px;">Edge thickness = co-occurrence count</p>
+        <p style="font-size: 11px;">Click nodes to see details</p>
+    </div>
+    </body>
+</html>

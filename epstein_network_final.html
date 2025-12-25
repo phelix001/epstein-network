@@ -1,0 +1,244 @@
+<html>
+    <head>
+        <meta charset="utf-8">
+        
+            <script src="lib/bindings/utils.js"></script>
+            <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/dist/vis-network.min.css" integrity="sha512-WgxfT5LWjfszlPHXRmBWHkV2eceiWTOBvrKCNbdgDYTHrT2AeLCGbF4sZlZw3UMN3WtL0tGUoIAKsu8mllg/XA==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/vis-network/9.1.2/dist/vis-network.min.js" integrity="sha512-LnvoEWDFrqGHlHmDD2101OrLcbsfkrzoSpvtSQtxK3RMnRV0eOkhhBN2dXHKRrUU8p2DGRTk35n4O8nWSVe1mQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            
+        
+<center>
+<h1></h1>
+</center>
+
+<!-- <link rel="stylesheet" href="../node_modules/vis/dist/vis.min.css" type="text/css" />
+<script type="text/javascript" src="../node_modules/vis/dist/vis.js"> </script>-->
+        <link
+          href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/css/bootstrap.min.css"
+          rel="stylesheet"
+          integrity="sha384-eOJMYsd53ii+scO/bJGFsiCZc+5NDVN2yr8+0RDqr0Ql0h+rP48ckxlpbzKgwra6"
+          crossorigin="anonymous"
+        />
+        <script
+          src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta3/dist/js/bootstrap.bundle.min.js"
+          integrity="sha384-JEW9xMcG8R+pH31jmWH6WWP0WintQrMb4s7ZOdauHnUtxwoG2vI5DkLtS3qm9Ekf"
+          crossorigin="anonymous"
+        ></script>
+
+
+        <center>
+          <h1></h1>
+        </center>
+        <style type="text/css">
+
+             #mynetwork {
+                 width: 100%;
+                 height: 900px;
+                 background-color: #0d1117;
+                 border: 1px solid lightgray;
+                 position: relative;
+                 float: left;
+             }
+
+             
+
+             
+
+             
+        </style>
+    </head>
+
+
+    <body>
+        <div class="card" style="width: 100%">
+            
+            
+            <div id="mynetwork" class="card-body"></div>
+        </div>
+
+        
+        
+
+        <script type="text/javascript">
+
+              // initialize global variables.
+              var edges;
+              var nodes;
+              var allNodes;
+              var allEdges;
+              var nodeColors;
+              var originalNodes;
+              var network;
+              var container;
+              var options, data;
+              var filter = {
+                  item : '',
+                  property : '',
+                  value : []
+              };
+
+              
+
+              
+
+              // This method is responsible for drawing the graph, returns the drawn network
+              function drawGraph() {
+                  var container = document.getElementById('mynetwork');
+
+                  
+
+                  // parsing and collecting nodes and edges from the python
+                  nodes = new vis.DataSet([{"color": "#ff0000", "font": {"color": "white"}, "id": "Jeffrey Epstein", "label": "Jeffrey Epstein", "shape": "dot", "size": 80, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #ff0000;\"\u003eJeffrey Epstein\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Core\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 62\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 1994 - 2025\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003ePalm Beach (62), Florida (51), New York (49), Miami (29), Manhattan (5)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eGhislaine Maxwell (27), Alexander Acosta (4), Donald Trump (4), Julie K. Brown (4), Jane Doe (Various) (3)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#ff0000", "font": {"color": "white"}, "id": "Ghislaine Maxwell", "label": "Ghislaine Maxwell", "shape": "dot", "size": 63, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #ff0000;\"\u003eGhislaine Maxwell\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Core\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 16\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 1994 - 2025\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNew York (20), Palm Beach (14), Florida (11), Miami (7), New Mexico (4)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eJeffrey Epstein (27), David Boies (2), Alan Dershowitz (1), Donald Trump (1), Bill Clinton (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#ff6600", "font": {"color": "white"}, "id": "Sarah Kellen", "label": "Sarah Kellen", "shape": "dot", "size": 20, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #ff6600;\"\u003eSarah Kellen\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Accomplice\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 1\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2004 - 2017\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNew York (1), Miami (1)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eAlan Dershowitz (1), Donald Trump (1), Bill Clinton (1), Virginia Giuffre (1), Ghislaine Maxwell (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#ff6600", "font": {"color": "white"}, "id": "Lesley Groff", "label": "Lesley Groff", "shape": "dot", "size": 20, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #ff6600;\"\u003eLesley Groff\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Accomplice\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 1\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2004 - 2017\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNew York (1), Miami (1)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eAlan Dershowitz (1), Donald Trump (1), Bill Clinton (1), Virginia Giuffre (1), Ghislaine Maxwell (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#ff6600", "font": {"color": "white"}, "id": "Jean-Luc Brunel", "label": "Jean-Luc Brunel", "shape": "dot", "size": 33, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #ff6600;\"\u003eJean-Luc Brunel\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Accomplice\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 6\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2000 - 2023\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eParis (10), London (3), New York (3)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eNaomi Campbell (1), Jeffrey Epstein (1), Ghislaine Maxwell (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#9900ff", "font": {"color": "white"}, "id": "Virginia Giuffre", "label": "Virginia Giuffre", "shape": "dot", "size": 20, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #9900ff;\"\u003eVirginia Giuffre\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Victim\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 1\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2004 - 2017\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNew York (1), Miami (1)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eAlan Dershowitz (1), Donald Trump (1), Bill Clinton (1), Ghislaine Maxwell (1), Prince Andrew (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#9900ff", "font": {"color": "white"}, "id": "Jane Doe (Various)", "label": "Jane Doe (Various)", "shape": "dot", "size": 24, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #9900ff;\"\u003eJane Doe (Various)\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Victim\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 3\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2002 - 2020\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNew York (3), Manhattan (3), Palm Beach (3), Florida (3), Miami (3)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eAlexander Acosta (3), Donald Trump (3), Julie K. Brown (3), Jeffrey Epstein (3)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#0066ff", "font": {"color": "white"}, "id": "Bill Clinton", "label": "Bill Clinton", "shape": "dot", "size": 20, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #0066ff;\"\u003eBill Clinton\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Political\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 1\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2004 - 2017\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNew York (1), Miami (1)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eAlan Dershowitz (1), Donald Trump (1), Virginia Giuffre (1), Ghislaine Maxwell (1), Prince Andrew (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#0066ff", "font": {"color": "white"}, "id": "Donald Trump", "label": "Donald Trump", "shape": "dot", "size": 27, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #0066ff;\"\u003eDonald Trump\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Political\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 4\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2002 - 2020\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNew York (4), Miami (4), Manhattan (3), Palm Beach (3), Florida (3)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eJeffrey Epstein (4), Jane Doe (Various) (3), Alexander Acosta (3), Julie K. Brown (3), Alan Dershowitz (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#0066ff", "font": {"color": "white"}, "id": "Prince Andrew", "label": "Prince Andrew", "shape": "dot", "size": 20, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #0066ff;\"\u003ePrince Andrew\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Political\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 1\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2004 - 2017\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNew York (1), Miami (1)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eAlan Dershowitz (1), Donald Trump (1), Bill Clinton (1), Virginia Giuffre (1), Ghislaine Maxwell (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#00cc00", "font": {"color": "white"}, "id": "Glenn Dubin", "label": "Glenn Dubin", "shape": "dot", "size": 24, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #00cc00;\"\u003eGlenn Dubin\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Business\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 3\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e N/A\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eLondon (3)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eNone\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#ffcc00", "font": {"color": "white"}, "id": "Alan Dershowitz", "label": "Alan Dershowitz", "shape": "dot", "size": 20, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #ffcc00;\"\u003eAlan Dershowitz\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Legal\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 1\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2004 - 2017\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNew York (1), Miami (1)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eDonald Trump (1), Bill Clinton (1), Virginia Giuffre (1), Ghislaine Maxwell (1), Prince Andrew (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#ffcc00", "font": {"color": "white"}, "id": "David Boies", "label": "David Boies", "shape": "dot", "size": 21, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #ffcc00;\"\u003eDavid Boies\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Legal\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 2\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 1994 - 2020\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNew York (2), Palm Beach (2), Zorro Ranch, NM (2), New Mexico (2), Florida (2)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eJeffrey Epstein (2), Ghislaine Maxwell (2), Joi Ito (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#ffcc00", "font": {"color": "white"}, "id": "Alexander Acosta", "label": "Alexander Acosta", "shape": "dot", "size": 27, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #ffcc00;\"\u003eAlexander Acosta\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Legal\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 4\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2002 - 2020\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003ePalm Beach (4), Florida (4), Miami (4), New York (3), Manhattan (3)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eJeffrey Epstein (4), Jane Doe (Various) (3), Donald Trump (3), Julie K. Brown (3)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#00cccc", "font": {"color": "white"}, "id": "Joi Ito", "label": "Joi Ito", "shape": "dot", "size": 39, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #00cccc;\"\u003eJoi Ito\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Academic\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 8\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 1994 - 2020\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eParis (4), London (3), New York (1), Palm Beach (1), Zorro Ranch, NM (1)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eDavid Boies (1), Jeffrey Epstein (1), Ghislaine Maxwell (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#ff66cc", "font": {"color": "white"}, "id": "David Copperfield", "label": "David Copperfield", "shape": "dot", "size": 20, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #ff66cc;\"\u003eDavid Copperfield\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Entertainment\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 1\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2005 - 2007\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eNot specified\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eNone\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#ff66cc", "font": {"color": "white"}, "id": "Naomi Campbell", "label": "Naomi Campbell", "shape": "dot", "size": 20, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #ff66cc;\"\u003eNaomi Campbell\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Entertainment\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 1\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2000 - 2006\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003eParis (1)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eJean-Luc Brunel (1), Jeffrey Epstein (1), Ghislaine Maxwell (1)\u003c/p\u003e\n        \u003c/div\u003e"}, {"color": "#66ff66", "font": {"color": "white"}, "id": "Julie K. Brown", "label": "Julie K. Brown", "shape": "dot", "size": 27, "title": "\u003cdiv style=\"font-family: Arial; padding: 10px; max-width: 300px;\"\u003e\n        \u003ch3 style=\"margin: 0 0 10px 0; color: #66ff66;\"\u003eJulie K. Brown\u003c/h3\u003e\n        \u003cp\u003e\u003cb\u003eCategory:\u003c/b\u003e Journalist\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eDocuments:\u003c/b\u003e 4\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eYears Active:\u003c/b\u003e 2002 - 2020\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eLocations:\u003c/b\u003e\u003cbr\u003ePalm Beach (4), Miami (4), New York (3), Manhattan (3), Florida (3)\u003c/p\u003e\n        \u003cp\u003e\u003cb\u003eKey Connections:\u003c/b\u003e\u003cbr\u003eJeffrey Epstein (4), Jane Doe (Various) (3), Alexander Acosta (3), Donald Trump (3)\u003c/p\u003e\n        \u003c/div\u003e"}]);
+                  edges = new vis.DataSet([{"color": "rgba(255, 100, 100, 0.8)", "from": "Jeffrey Epstein", "title": "27 document co-occurrences", "to": "Ghislaine Maxwell", "width": 8}, {"color": "rgba(255, 200, 100, 0.7)", "from": "Jeffrey Epstein", "title": "4 document co-occurrences", "to": "Alexander Acosta", "width": 6.0}, {"color": "rgba(255, 200, 100, 0.7)", "from": "Jeffrey Epstein", "title": "4 document co-occurrences", "to": "Donald Trump", "width": 6.0}, {"color": "rgba(255, 200, 100, 0.7)", "from": "Jeffrey Epstein", "title": "4 document co-occurrences", "to": "Julie K. Brown", "width": 6.0}, {"color": "rgba(255, 200, 100, 0.7)", "from": "Jeffrey Epstein", "title": "3 document co-occurrences", "to": "Jane Doe (Various)", "width": 4.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jeffrey Epstein", "title": "2 document co-occurrences", "to": "David Boies", "width": 3.0}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jeffrey Epstein", "title": "1 document co-occurrences", "to": "Alan Dershowitz", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jeffrey Epstein", "title": "1 document co-occurrences", "to": "Bill Clinton", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jeffrey Epstein", "title": "1 document co-occurrences", "to": "Virginia Giuffre", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jeffrey Epstein", "title": "1 document co-occurrences", "to": "Prince Andrew", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jeffrey Epstein", "title": "1 document co-occurrences", "to": "Sarah Kellen", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jeffrey Epstein", "title": "1 document co-occurrences", "to": "Lesley Groff", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jeffrey Epstein", "title": "1 document co-occurrences", "to": "Naomi Campbell", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jeffrey Epstein", "title": "1 document co-occurrences", "to": "Jean-Luc Brunel", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jeffrey Epstein", "title": "1 document co-occurrences", "to": "Joi Ito", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "2 document co-occurrences", "to": "David Boies", "width": 3.0}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "1 document co-occurrences", "to": "Alan Dershowitz", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "1 document co-occurrences", "to": "Donald Trump", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "1 document co-occurrences", "to": "Bill Clinton", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "1 document co-occurrences", "to": "Virginia Giuffre", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "1 document co-occurrences", "to": "Prince Andrew", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "1 document co-occurrences", "to": "Sarah Kellen", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "1 document co-occurrences", "to": "Lesley Groff", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "1 document co-occurrences", "to": "Naomi Campbell", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "1 document co-occurrences", "to": "Jean-Luc Brunel", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Ghislaine Maxwell", "title": "1 document co-occurrences", "to": "Joi Ito", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Sarah Kellen", "title": "1 document co-occurrences", "to": "Alan Dershowitz", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Sarah Kellen", "title": "1 document co-occurrences", "to": "Donald Trump", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Sarah Kellen", "title": "1 document co-occurrences", "to": "Bill Clinton", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Sarah Kellen", "title": "1 document co-occurrences", "to": "Virginia Giuffre", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Sarah Kellen", "title": "1 document co-occurrences", "to": "Prince Andrew", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Sarah Kellen", "title": "1 document co-occurrences", "to": "Lesley Groff", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Lesley Groff", "title": "1 document co-occurrences", "to": "Alan Dershowitz", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Lesley Groff", "title": "1 document co-occurrences", "to": "Donald Trump", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Lesley Groff", "title": "1 document co-occurrences", "to": "Bill Clinton", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Lesley Groff", "title": "1 document co-occurrences", "to": "Virginia Giuffre", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Lesley Groff", "title": "1 document co-occurrences", "to": "Prince Andrew", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Jean-Luc Brunel", "title": "1 document co-occurrences", "to": "Naomi Campbell", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Virginia Giuffre", "title": "1 document co-occurrences", "to": "Alan Dershowitz", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Virginia Giuffre", "title": "1 document co-occurrences", "to": "Donald Trump", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Virginia Giuffre", "title": "1 document co-occurrences", "to": "Bill Clinton", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Virginia Giuffre", "title": "1 document co-occurrences", "to": "Prince Andrew", "width": 1.5}, {"color": "rgba(255, 200, 100, 0.7)", "from": "Jane Doe (Various)", "title": "3 document co-occurrences", "to": "Alexander Acosta", "width": 4.5}, {"color": "rgba(255, 200, 100, 0.7)", "from": "Jane Doe (Various)", "title": "3 document co-occurrences", "to": "Donald Trump", "width": 4.5}, {"color": "rgba(255, 200, 100, 0.7)", "from": "Jane Doe (Various)", "title": "3 document co-occurrences", "to": "Julie K. Brown", "width": 4.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Bill Clinton", "title": "1 document co-occurrences", "to": "Alan Dershowitz", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Bill Clinton", "title": "1 document co-occurrences", "to": "Donald Trump", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Bill Clinton", "title": "1 document co-occurrences", "to": "Prince Andrew", "width": 1.5}, {"color": "rgba(255, 200, 100, 0.7)", "from": "Donald Trump", "title": "3 document co-occurrences", "to": "Alexander Acosta", "width": 4.5}, {"color": "rgba(255, 200, 100, 0.7)", "from": "Donald Trump", "title": "3 document co-occurrences", "to": "Julie K. Brown", "width": 4.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Donald Trump", "title": "1 document co-occurrences", "to": "Alan Dershowitz", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Donald Trump", "title": "1 document co-occurrences", "to": "Prince Andrew", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "Prince Andrew", "title": "1 document co-occurrences", "to": "Alan Dershowitz", "width": 1.5}, {"color": "rgba(150, 150, 150, 0.5)", "from": "David Boies", "title": "1 document co-occurrences", "to": "Joi Ito", "width": 1.5}, {"color": "rgba(255, 200, 100, 0.7)", "from": "Alexander Acosta", "title": "3 document co-occurrences", "to": "Julie K. Brown", "width": 4.5}]);
+
+                  nodeColors = {};
+                  allNodes = nodes.get({ returnType: "Object" });
+                  for (nodeId in allNodes) {
+                    nodeColors[nodeId] = allNodes[nodeId].color;
+                  }
+                  allEdges = edges.get({ returnType: "Object" });
+                  // adding nodes and edges to the graph
+                  data = {nodes: nodes, edges: edges};
+
+                  var options = {"nodes": {"font": {"size": 16, "face": "arial"}, "borderWidth": 2, "shadow": true}, "edges": {"color": {"inherit": false}, "smooth": {"type": "continuous"}, "shadow": true}, "physics": {"barnesHut": {"gravitationalConstant": -8000, "centralGravity": 0.5, "springLength": 200, "springConstant": 0.05, "damping": 0.3}, "minVelocity": 0.75}, "interaction": {"hover": true, "tooltipDelay": 100, "hideEdgesOnDrag": true}};
+
+                  
+
+
+                  
+
+                  network = new vis.Network(container, data, options);
+
+                  
+
+                  
+
+                  
+
+
+                  
+
+                  return network;
+
+              }
+              drawGraph();
+        </script>
+    
+    <style>
+        .legend {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(13, 17, 23, 0.95);
+            padding: 20px;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+            color: white;
+            max-width: 250px;
+        }
+        .legend h2 {
+            margin: 0 0 15px 0;
+            font-size: 18px;
+            border-bottom: 1px solid #30363d;
+            padding-bottom: 10px;
+        }
+        .legend-item {
+            display: flex;
+            align-items: center;
+            margin: 8px 0;
+            font-size: 13px;
+        }
+        .legend-color {
+            width: 16px;
+            height: 16px;
+            border-radius: 50%;
+            margin-right: 10px;
+            border: 2px solid rgba(255,255,255,0.3);
+        }
+        .legend-section {
+            margin-top: 15px;
+            padding-top: 10px;
+            border-top: 1px solid #30363d;
+            font-size: 12px;
+            color: #8b949e;
+        }
+        .title-bar {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background: rgba(13, 17, 23, 0.95);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+            color: white;
+            text-align: right;
+        }
+        .title-bar h1 {
+            margin: 0;
+            font-size: 20px;
+        }
+        .title-bar p {
+            margin: 5px 0 0 0;
+            color: #8b949e;
+            font-size: 12px;
+        }
+        .timeline-bar {
+            position: fixed;
+            bottom: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background: rgba(13, 17, 23, 0.95);
+            padding: 15px 25px;
+            border-radius: 10px;
+            border: 1px solid #30363d;
+            z-index: 1000;
+            font-family: Arial, sans-serif;
+            color: white;
+        }
+        .timeline-bar label {
+            font-size: 14px;
+            margin-right: 15px;
+        }
+        .timeline-bar input[type="range"] {
+            width: 400px;
+            cursor: pointer;
+        }
+        #year-display {
+            display: inline-block;
+            min-width: 80px;
+            text-align: center;
+            font-weight: bold;
+        }
+    </style>
+
+    <div class="legend">
+        <h2>Epstein Network</h2>
+        <div class="legend-item"><div class="legend-color" style="background: #ff0000;"></div> Core (Epstein/Maxwell)</div>
+        <div class="legend-item"><div class="legend-color" style="background: #ff6600;"></div> Accomplices</div>
+        <div class="legend-item"><div class="legend-color" style="background: #9900ff;"></div> Victims</div>
+        <div class="legend-item"><div class="legend-color" style="background: #0066ff;"></div> Political Figures</div>
+        <div class="legend-item"><div class="legend-color" style="background: #00cc00;"></div> Business/Finance</div>
+        <div class="legend-item"><div class="legend-color" style="background: #ffcc00;"></div> Legal</div>
+        <div class="legend-item"><div class="legend-color" style="background: #00cccc;"></div> Academic/Science</div>
+        <div class="legend-item"><div class="legend-color" style="background: #ff66cc;"></div> Entertainment</div>
+        <div class="legend-item"><div class="legend-color" style="background: #996633;"></div> Staff</div>
+        <div class="legend-item"><div class="legend-color" style="background: #66ff66;"></div> Journalists</div>
+        <div class="legend-section">
+            <p>• Node size = document count</p>
+            <p>• Edge thickness = co-occurrences</p>
+            <p>• Click nodes for details</p>
+            <p>• Drag to rearrange</p>
+        </div>
+    </div>
+
+    <div class="title-bar">
+        <h1>Jeffrey Epstein Document Network</h1>
+        <p>Based on 8531 FOIA documents</p>
+        <p>Extracted 18 key individuals</p>
+    </div>
+    </body>
+</html>

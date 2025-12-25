@@ -1,0 +1,87 @@
+{
+  "source": "DOJ DataSet 6 - Grand Jury Transcripts",
+  "total_documents": 13,
+  "total_characters": 462819,
+  "entities": {
+    "Jeffrey Epstein": {
+      "count": 115,
+      "category": "core",
+      "document_count": 12,
+      "sample_contexts": [
+        "slaine Maxwell, and 6 the picture on the right is Jeffrey Epstein with 7 Ghislaine Maxwell. 8 Q. Based on your part",
+        "located in 13 Michigan? 14 A. Yes. 15 Q. Did meet Jeffrey Epstein and lE Ghislaine Maxwell that summer? 17 A. Yes, ",
+        " were the listed passengers on this flight? 15 A. Jeffrey Epstein, (ph.), and 16 (ph.). 17 Q. Turning to the next s"
+      ]
+    },
+    "Epstein": {
+      "count": 949,
+      "category": "core",
+      "document_count": 13,
+      "sample_contexts": [
+        "axwell, and 6 the picture on the right is Jeffrey Epstein with 7 Ghislaine Maxwell. 8 Q. Based on your part",
+        "w of public source materials, have Maxwell and 10 Epstein been photographed together many times over the 11",
+        "A. 58. 23 Q. Has the FBI investigated Maxwell and Epstein's 24 conduct with minors during the 1990's? 25 A."
+      ]
+    },
+    "Ghislaine Maxwell": {
+      "count": 121,
+      "category": "accomplice",
+      "document_count": 10,
+      "sample_contexts": [
+        "TES OF AMERICA 6 : November 19, 2019 Additional 1 GHISLAINE MAXWELL (2018R01618) -x 9 10 United States Courthouse 300",
+        ". Have you participated in an investigation of 14 Ghislaine Maxwell? 15 A. Yes, I have. 16 Q. Have you spoken to othe",
+        "hese photographs? 5 A. The picture on the left is Ghislaine Maxwell, and 6 the picture on the right is Jeffrey Epstei"
+      ]
+    },
+    "Maxwell": {
+      "count": 771,
+      "category": "accomplice",
+      "document_count": 10,
+      "sample_contexts": [
+        "RICA 6 : November 19, 2019 Additional 1 GHISLAINE MAXWELL (2018R01618) -x 9 10 United States Courthouse 300",
+        " participated in an investigation of 14 Ghislaine Maxwell? 15 A. Yes, I have. 16 Q. Have you spoken to othe",
+        "graphs? 5 A. The picture on the left is Ghislaine Maxwell, and 6 the picture on the right is Jeffrey Epstei"
+      ]
+    },
+    "Zorro Ranch": {
+      "count": 5,
+      "category": "location",
+      "document_count": 5,
+      "sample_contexts": [
+        "he next slide. Was that property 24 located at 49 Zorro Ranch Road in Stanley, New Mexico? 25 A. Yes. FREE STAT",
+        "m Beach, Florida GM_G,S.Y,ON)0367 EFTA00008895 49 Zorro Ranch Road, Stanley, New Mexico GM_GLSDNY_00000368 EFTA",
+        "e next slide, was that a 6 property located at 49 Zorro Ranch Road in Stanley, 7 New Mexico?\" 8 A. \"Yes.\" 9 4. "
+      ]
+    },
+    "Palm Beach": {
+      "count": 127,
+      "category": "location",
+      "document_count": 11,
+      "sample_contexts": [
+        "Where did he maintain properties? 14 A. New York, Palm Beach, and New Mexico. 15 Q. Turning to the next slide,",
+        "other properties. Did he maintain 5 an address in Palm Beach, Florida, located at 358 El Brillo 6 Way? 7 A. Ye",
+        " Epstein have an employee 12 who ran his house in Palm Beach? 13 A. Yes, he did. 14 Q. What was his job? 15 A."
+      ]
+    },
+    "New Mexico": {
+      "count": 51,
+      "category": "location",
+      "document_count": 8,
+      "sample_contexts": [
+        "ntain properties? 14 A. New York, Palm Beach, and New Mexico. 15 Q. Turning to the next slide, did he maintain",
+        "next property. Did Epstein also 21 own a ranch in New Mexico? 22 A. Yes, he did. 23 Q\u2022 And turning to the next",
+        "rty 24 located at 49 Zorro Ranch Road in Stanley, New Mexico? 25 A. Yes. FREE STATE REPORTING, INC. Court Repo"
+      ]
+    },
+    "Virgin Islands": {
+      "count": 5,
+      "category": "location",
+      "document_count": 4,
+      "sample_contexts": [
+        "invite to travel with them to Palm 24 Beach, U.S. Virgin Islands, Paris, and New York for the next 25 several year",
+        "invite to travel with them to 24 Palm Beach, U.S. Virgin Islands, Paris, and New York, for 25 the next several yea",
+        "light, on the 14th, goes from Teterboro to the 12 Virgin Islands. On that flight is Epstein, Maxwell, 13 among oth"
+      ]
+    }
+  }
+}

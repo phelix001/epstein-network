@@ -1,0 +1,35 @@
+# Python
+venv/
+__pycache__/
+*.pyc
+*.pyo
+
+# Large datasets - download separately from DOJ FOIA
+additional_data/
+*.zip
+
+# Extracted text files (large)
+dataset*_text.txt
+flight_logs_text.txt
+flight_logs_extracted.txt
+
+# Original HuggingFace dataset - download separately
+dataset_text_extract*.csv
+
+# Environment/secrets
+.env
+*.key
+*credentials*
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# IDE
+.idea/
+.vscode/
+*.swp
+
+# Temp files
+*.tmp
+*.bak

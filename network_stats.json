@@ -1,0 +1,85 @@
+{
+  "total_nodes": 17,
+  "total_edges": 20,
+  "top_connected": [
+    [
+      "Jeffrey Epstein",
+      8
+    ],
+    [
+      "Jean-Luc Brunel",
+      3
+    ],
+    [
+      "Donald Trump",
+      3
+    ],
+    [
+      "Julie K. Brown",
+      3
+    ],
+    [
+      "Jeffrey Epstein\u2019S",
+      3
+    ],
+    [
+      "Ghislaine Maxwell",
+      2
+    ],
+    [
+      "Encounter Detail",
+      2
+    ],
+    [
+      "Counties History",
+      2
+    ],
+    [
+      "Pilot Licenses",
+      2
+    ],
+    [
+      "Richard Taus",
+      2
+    ],
+    [
+      "Appendix A",
+      2
+    ],
+    [
+      "David Copperfield \nEvent",
+      2
+    ],
+    [
+      "David Copperfield",
+      2
+    ],
+    [
+      "Visa Card",
+      1
+    ],
+    [
+      "Floor \nBelle Glade",
+      1
+    ],
+    [
+      "Will Provide",
+      1
+    ],
+    [
+      "Jean Luc=",
+      1
+    ]
+  ],
+  "categories": {
+    "core": 2,
+    "accomplice": 1,
+    "victim": 0,
+    "political": 1,
+    "business": 0,
+    "legal": 0,
+    "academic": 0,
+    "entertainment": 1,
+    "other": 12
+  }
+}
