@@ -2,7 +2,9 @@
 
 **TL;DR:** The DOJ released thousands of documents with "redacted" content that's actually just black boxes overlaid on text. Copy/paste or PDF text extraction reveals everything underneath. I found personal emails, victim ages, social media accounts, and a 2002 email chain about arranging "girls" in Peru.
 
-**[Interactive Network Graph - Click to Explore](https://github.com/yourusername/epstein-network)** - 47 individuals, 112 connections, filterable by year
+**[Interactive Network Graph - Click to Explore](https://phelix001.github.io/epstein-network/epstein_network_timeline.html)** - 47 individuals, 112 connections, filterable by year
+
+**[GitHub Repository](https://github.com/phelix001/epstein-network)**
 
 ---
 

@@ -69,7 +69,7 @@ To contribute corrections to transcripts or metadata, please open a Pull Request
 
 ### Live Demo
 
-**[Open the Interactive Network Graph](epstein_network_timeline.html)** - Open locally in browser
+**[Open the Interactive Network Graph](https://phelix001.github.io/epstein-network/epstein_network_timeline.html)**
 
 - **Click any node** to open Wikipedia
 - **Use the timeline slider** to filter by year (1994-2025)
