@@ -6,29 +6,79 @@ Build interactive network visualization with time slider
 import json
 from pathlib import Path
 
-# Special Wikipedia URLs for disambiguation
+# Special Wikipedia URLs for disambiguation and corrections
 WIKI_OVERRIDES = {
-    'Roy Black': 'https://en.wikipedia.org/wiki/Roy_Black_(attorney)',
+    # Core figures
+    'Jeffrey Epstein': 'https://en.wikipedia.org/wiki/Jeffrey_Epstein',
+    'Ghislaine Maxwell': 'https://en.wikipedia.org/wiki/Ghislaine_Maxwell',
+
+    # Political figures
     'Prince Andrew': 'https://en.wikipedia.org/wiki/Prince_Andrew,_Duke_of_York',
     'Bill Clinton': 'https://en.wikipedia.org/wiki/Bill_Clinton',
     'Donald Trump': 'https://en.wikipedia.org/wiki/Donald_Trump',
     'Joe Biden': 'https://en.wikipedia.org/wiki/Joe_Biden',
-    'Virginia Giuffre': 'https://en.wikipedia.org/wiki/Virginia_Giuffre',
-    'Jean-Luc Brunel': 'https://en.wikipedia.org/wiki/Jean-Luc_Brunel',
-    'Leslie Wexner': 'https://en.wikipedia.org/wiki/Les_Wexner',
-    'David Boies': 'https://en.wikipedia.org/wiki/David_Boies',
-    'Ken Starr': 'https://en.wikipedia.org/wiki/Ken_Starr',
-    'Alexander Acosta': 'https://en.wikipedia.org/wiki/Alexander_Acosta',
-    'Gloria Allred': 'https://en.wikipedia.org/wiki/Gloria_Allred',
     'Robert Mueller': 'https://en.wikipedia.org/wiki/Robert_Mueller',
+
+    # Victims
+    'Virginia Giuffre': 'https://en.wikipedia.org/wiki/Virginia_Giuffre',
+    'Jane Doe': 'https://en.wikipedia.org/wiki/Jane_Doe_(pseudonym)',
+    'Jane Doe (Various)': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+
+    # Associates/Accomplices
+    'Jean-Luc Brunel': 'https://en.wikipedia.org/wiki/Jean-Luc_Brunel',
+    'Sarah Kellen': 'https://en.wikipedia.org/wiki/Sarah_Kellen',
+    'Lesley Groff': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+    'Glenn Dubin': 'https://en.wikipedia.org/wiki/Glenn_Dubin',
+    'Stan Pottinger': 'https://en.wikipedia.org/wiki/John_Stanley_Pottinger',
+    'Juanesteban Ganoza': None,  # No Wikipedia page
+
+    # Family
+    'Mark Epstein': 'https://en.wikipedia.org/wiki/Jeffrey_Epstein#Family_and_early_life',
+    'Isabel Maxwell': 'https://en.wikipedia.org/wiki/Isabel_Maxwell',
+
+    # Business
+    'Leslie Wexner': 'https://en.wikipedia.org/wiki/Les_Wexner',
     'Deutsche Bank': 'https://en.wikipedia.org/wiki/Deutsche_Bank',
+
+    # Entertainment
     'Naomi Campbell': 'https://en.wikipedia.org/wiki/Naomi_Campbell',
     'David Copperfield': 'https://en.wikipedia.org/wiki/David_Copperfield_(illusionist)',
-    'Joi Ito': 'https://en.wikipedia.org/wiki/Joi_Ito',
-    'Sarah Kellen': 'https://en.wikipedia.org/wiki/Sarah_Kellen',
+
+    # Legal - Epstein/Maxwell Defense
+    'Roy Black': 'https://en.wikipedia.org/wiki/Roy_Black_(attorney)',
+    'Jay Lefkowitz': 'https://en.wikipedia.org/wiki/Jay_Lefkowitz',
+    'Ken Starr': 'https://en.wikipedia.org/wiki/Ken_Starr',
+    'Alan Dershowitz': 'https://en.wikipedia.org/wiki/Alan_Dershowitz',
+    'Martin Weinberg': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+    'Reid Weingarten': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+    'Mark Cohen': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+    'Laura Menninger': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+    'Jeff Pagliuca': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+    'Christian Everdell': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+    'Bobbi Sternheim': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+
+    # Legal - Prosecutors/Judges
+    'Alexander Acosta': 'https://en.wikipedia.org/wiki/Alexander_Acosta',
     'Judge Berman': 'https://en.wikipedia.org/wiki/Richard_M._Berman',
     'Alison Nathan': 'https://en.wikipedia.org/wiki/Alison_Nathan',
     'Audrey Strauss': 'https://en.wikipedia.org/wiki/Audrey_Strauss',
+    'Barry Krischer': 'https://en.wikipedia.org/wiki/Jeffrey_Epstein#Criminal_proceedings_in_Florida',
+
+    # Legal - Victims' Attorneys
+    'Gloria Allred': 'https://en.wikipedia.org/wiki/Gloria_Allred',
+    'David Boies': 'https://en.wikipedia.org/wiki/David_Boies',
+    'Brad Edwards': 'https://en.wikipedia.org/wiki/Bradley_Edwards_(attorney)',
+    'Sigrid McCawley': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+    'Paul Cassell': 'https://en.wikipedia.org/wiki/Paul_Cassell',
+    'Roberta Kaplan': 'https://en.wikipedia.org/wiki/Robbie_Kaplan',
+    'Jack Scarola': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+    'Bruce Barket': 'https://en.wikipedia.org/wiki/Litigation_involving_Jeffrey_Epstein',
+
+    # Academic/Tech
+    'Joi Ito': 'https://en.wikipedia.org/wiki/Joi_Ito',
+
+    # Journalists
+    'Julie K. Brown': 'https://en.wikipedia.org/wiki/Julie_K._Brown',
 }
 
 CATEGORY_COLORS = {
@@ -112,7 +162,7 @@ Key Connections: {conn_str}"""
 
         # Generate Wikipedia URL (use override if available)
         if name in WIKI_OVERRIDES:
-            wiki_url = WIKI_OVERRIDES[name]
+            wiki_url = WIKI_OVERRIDES[name]  # May be None for no Wikipedia page
         else:
             wiki_name = name.replace(' ', '_')
             wiki_url = f"https://en.wikipedia.org/wiki/{wiki_name}"
